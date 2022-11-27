@@ -1,5 +1,6 @@
-package org.example.domain;
+package org.example.domain.queue;
 
+import org.example.domain.PriorityQueue;
 import org.example.support.TestEvent;
 import org.example.support.TestEventReverseComparator;
 import org.junit.jupiter.api.Test;

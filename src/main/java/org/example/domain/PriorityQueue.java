@@ -1,5 +1,8 @@
 package org.example.domain;
 
+import org.example.domain.heap.ArrayHeap;
+import org.example.domain.heap.Heap;
+
 import java.util.Comparator;
 
 public class PriorityQueue<E extends Comparable<E>> {
