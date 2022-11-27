@@ -1,15 +1,26 @@
 package org.example.domain;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ArrayHeap<E extends Comparable<E>> implements Heap<E> {
     private final ArrayList<E> list = new ArrayList<>();
+    private Comparator<E> comparator;
 
     public ArrayHeap() {
     }
 
     public ArrayHeap(E[] objects) {
         for (E object : objects) add(object);
+    }
+
+    public ArrayHeap(Comparator<E> comparator) {
+        this.comparator = comparator;
+    }
+
+    public ArrayHeap(E[] objects, Comparator<E> comparator) {
+        this(objects);
+        this.comparator = comparator;
     }
 
     @Override
@@ -20,12 +31,11 @@ public class ArrayHeap<E extends Comparable<E>> implements Heap<E> {
         while (currentIndex > 0) {
             int parentIndex = (currentIndex - 1) / 2;
             // Swap if the current object is greater than its parent
-            if (list.get(currentIndex).compareTo(list.get(parentIndex)) > 0) {
+            if (compare(list.get(currentIndex), list.get(parentIndex)) > 0) {
                 E temp = list.get(currentIndex);
                 list.set(currentIndex, list.get(parentIndex));
                 list.set(parentIndex, temp);
-            } else
-                break; // the tree is a heap now
+            } else break; // the tree is a heap now
 
             currentIndex = parentIndex;
         }
@@ -48,19 +58,18 @@ public class ArrayHeap<E extends Comparable<E>> implements Heap<E> {
             if (leftChildIndex >= list.size()) break; // The tree is a heap
             int maxIndex = leftChildIndex;
             if (rightChildIndex < list.size()) {
-                if (list.get(maxIndex).compareTo(list.get(rightChildIndex)) < 0) {
+                if (compare(list.get(maxIndex), list.get(rightChildIndex)) < 0) {
                     maxIndex = rightChildIndex;
                 }
             }
 
             // Swap if the current node is less than the maximum
-            if (list.get(currentIndex).compareTo(list.get(maxIndex)) < 0) {
+            if (compare(list.get(currentIndex), list.get(maxIndex)) < 0) {
                 E temp = list.get(maxIndex);
                 list.set(maxIndex, list.get(currentIndex));
                 list.set(currentIndex, temp);
                 currentIndex = maxIndex;
-            } else
-                break; // The tree is a heap
+            } else break; // The tree is a heap
         }
 
         return removedObject;
@@ -69,6 +78,14 @@ public class ArrayHeap<E extends Comparable<E>> implements Heap<E> {
     @Override
     public int getSize() {
         return list.size();
+    }
+
+    public int compare(E o1, E o2) {
+        if (comparator != null) {
+            return comparator.compare(o1, o2);
+        } else {
+            return o1.compareTo(o2);
+        }
     }
 
     public static <E extends Comparable<E>> void heapSort(E[] list) {

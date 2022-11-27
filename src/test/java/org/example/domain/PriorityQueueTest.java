@@ -1,6 +1,7 @@
 package org.example.domain;
 
 import org.example.support.TestEvent;
+import org.example.support.TestEventReverseComparator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,6 +66,25 @@ class PriorityQueueTest {
         assertEquals("C", queue.dequeue().getName());
         assertEquals("B", queue.dequeue().getName());
         assertEquals("A", queue.dequeue().getName());
+        assertEquals(0, queue.getSize());
+    }
+
+
+    @Test
+    void should_create_priority_queue_with_custom_comparator() {
+        PriorityQueue<TestEvent> queue = new PriorityQueue<>(new TestEventReverseComparator());
+        queue.enqueue(new TestEvent("A", 1));
+        queue.enqueue(new TestEvent("B", 2));
+        queue.enqueue(new TestEvent("C", 3));
+        queue.enqueue(new TestEvent("D", 4));
+        queue.enqueue(new TestEvent("E", 5));
+        queue.enqueue(new TestEvent("F", 6));
+        assertEquals("A", queue.dequeue().getName());
+        assertEquals("B", queue.dequeue().getName());
+        assertEquals("C", queue.dequeue().getName());
+        assertEquals("D", queue.dequeue().getName());
+        assertEquals("E", queue.dequeue().getName());
+        assertEquals("F", queue.dequeue().getName());
         assertEquals(0, queue.getSize());
     }
 }
