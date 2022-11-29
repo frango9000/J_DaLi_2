@@ -1,5 +1,11 @@
 package org.example.domain.bst;
 
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class TreeNode<E> {
 
     protected E element;
@@ -8,30 +14,6 @@ public class TreeNode<E> {
 
     public TreeNode(E e) {
         element = e;
-    }
-
-    public E getElement() {
-        return element;
-    }
-
-    public TreeNode<E> getLeft() {
-        return left;
-    }
-
-    public TreeNode<E> getRight() {
-        return right;
-    }
-
-    public void setElement(E e) {
-        element = e;
-    }
-
-    public void setLeft(TreeNode<E> newLeft) {
-        left = newLeft;
-    }
-
-    public void setRight(TreeNode<E> newRight) {
-        right = newRight;
     }
 
     public boolean isLeaf() {

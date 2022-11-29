@@ -11,8 +11,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
     }
 
     public BinarySearchTree(E[] objects) {
-        for (int i = 0; i < objects.length; i++)
-            insert(objects[i]);
+        for (E object : objects) insert(object);
     }
 
     @Override
@@ -190,6 +189,14 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
         return new InorderIterator();
     }
 
+    public Iterator<E> preOrderIterator() {
+        return new PreOrderIterator();
+    }
+
+    public Iterator<E> postOrderIterator() {
+        return new PostOrderIterator();
+    }
+
     private class InorderIterator implements Iterator<E> {
         private final java.util.ArrayList<E> list = new java.util.ArrayList<>();
         private int current = 0;
@@ -224,6 +231,80 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
             delete(list.get(current));
             list.clear();
             inorder();
+        }
+    }
+
+    private class PostOrderIterator implements Iterator<E> {
+        private final java.util.ArrayList<E> list = new java.util.ArrayList<>();
+        private int current = 0;
+
+        public PostOrderIterator() {
+            postorder();
+        }
+
+        private void postorder() {
+            postorder(root);
+        }
+
+        private void postorder(TreeNode<E> root) {
+            if (root == null) return;
+            postorder(root.left);
+            postorder(root.right);
+            list.add(root.element);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current < list.size();
+        }
+
+        @Override
+        public E next() {
+            return list.get(current++);
+        }
+
+        @Override
+        public void remove() {
+            delete(list.get(current));
+            list.clear();
+            postorder();
+        }
+    }
+
+    private class PreOrderIterator implements Iterator<E> {
+        private final java.util.ArrayList<E> list = new java.util.ArrayList<>();
+        private int current = 0;
+
+        public PreOrderIterator() {
+            preorder();
+        }
+
+        private void preorder() {
+            preorder(root);
+        }
+
+        private void preorder(TreeNode<E> root) {
+            if (root == null) return;
+            list.add(root.element);
+            preorder(root.left);
+            preorder(root.right);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current < list.size();
+        }
+
+        @Override
+        public E next() {
+            return list.get(current++);
+        }
+
+        @Override
+        public void remove() {
+            delete(list.get(current));
+            list.clear();
+            preorder();
         }
     }
 
