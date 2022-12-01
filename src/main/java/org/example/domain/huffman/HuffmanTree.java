@@ -2,8 +2,12 @@ package org.example.domain.huffman;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class HuffmanTree implements Comparable<HuffmanTree> {
+public class HuffmanTree implements Comparable<HuffmanTree>, Serializable {
+
+    private static final long serialVersionUID = -2049290019214847871L;
     private HuffmanTreeNode root;
 
     public HuffmanTree(char element, int weight) {
