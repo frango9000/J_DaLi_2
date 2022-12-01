@@ -13,13 +13,13 @@ public class HuffmanCompressor {
         HuffmanTree tree = _getHuffmanTree(counts);
         String[] codes = _getCodes(tree.getRoot());
 
-        StringBuilder builder = new StringBuilder();
+        StringBuilder binary = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            builder.append(codes[text.charAt(i)]);
+            binary.append(codes[text.charAt(i)]);
         }
 
         return HuffmanCompression.builder()
-                .compressed(builder.toString())
+                .compressed(binary.toString())
                 .tree(_getHuffmanTree(counts))
                 .build();
 
