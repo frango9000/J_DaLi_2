@@ -1,5 +1,6 @@
 package org.example.domain.bst;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
@@ -33,25 +34,20 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
 
     @Override
     public boolean insert(E e) {
-        if (root == null)
-            root = createNewNode(e);
+        if (root == null) root = createNewNode(e);
         else {
             TreeNode<E> parent = null;
             TreeNode<E> current = root;
-            while (current != null)
-                if (e.compareTo(current.element) < 0) {
-                    parent = current;
-                    current = current.left;
-                } else if (e.compareTo(current.element) > 0) {
-                    parent = current;
-                    current = current.right;
-                } else
-                    return false;
+            while (current != null) if (e.compareTo(current.element) < 0) {
+                parent = current;
+                current = current.left;
+            } else if (e.compareTo(current.element) > 0) {
+                parent = current;
+                current = current.right;
+            } else return false;
 
-            if (e.compareTo(parent.element) < 0)
-                parent.left = createNewNode(e);
-            else
-                parent.right = createNewNode(e);
+            if (e.compareTo(parent.element) < 0) parent.left = createNewNode(e);
+            else parent.right = createNewNode(e);
         }
 
         size++;
@@ -108,7 +104,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
     }
 
     public java.util.ArrayList<TreeNode<E>> path(E e) {
-        java.util.ArrayList<TreeNode<E>> list = new java.util.ArrayList<>();
+        ArrayList<TreeNode<E>> list = new ArrayList<>();
         TreeNode<E> current = root;
 
         while (current != null) {
@@ -127,8 +123,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
 
     @Override /* Delete an element from the binary tree.
      * Return true if the element is deleted successfully
-     * Return false if the element is not in the tree */
-    public boolean delete(E e) {
+     * Return false if the element is not in the tree */ public boolean delete(E e) {
         // Locate the node to be deleted and also locate its parent node
         TreeNode<E> parent = null;
         TreeNode<E> current = root;
@@ -139,12 +134,10 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
             } else if (e.compareTo(current.element) > 0) {
                 parent = current;
                 current = current.right;
-            } else
-                break;
+            } else break;
         }
 
-        if (current == null)
-            return false;
+        if (current == null) return false;
 
         // Case 1: current has no left children
         if (current.left == null) {
@@ -152,10 +145,8 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
             if (parent == null) {
                 root = current.right;
             } else {
-                if (e.compareTo(parent.element) < 0)
-                    parent.left = current.right;
-                else
-                    parent.right = current.right;
+                if (e.compareTo(parent.element) < 0) parent.left = current.right;
+                else parent.right = current.right;
             }
         } else {
             // Case 2: The current node has a left child
@@ -173,8 +164,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
             current.element = rightMost.element;
 
             // Eliminate rightmost node
-            if (parentOfRightMost.right == rightMost)
-                parentOfRightMost.right = rightMost.left;
+            if (parentOfRightMost.right == rightMost) parentOfRightMost.right = rightMost.left;
             else
                 // Special case: parentOfRightMost == current
                 parentOfRightMost.left = rightMost.left;
@@ -198,7 +188,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
     }
 
     private class InorderIterator implements Iterator<E> {
-        private final java.util.ArrayList<E> list = new java.util.ArrayList<>();
+        private final ArrayList<E> list = new ArrayList<>();
         private int current = 0;
 
         public InorderIterator() {
@@ -235,7 +225,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
     }
 
     private class PostOrderIterator implements Iterator<E> {
-        private final java.util.ArrayList<E> list = new java.util.ArrayList<>();
+        private final ArrayList<E> list = new ArrayList<>();
         private int current = 0;
 
         public PostOrderIterator() {
@@ -272,7 +262,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
     }
 
     private class PreOrderIterator implements Iterator<E> {
-        private final java.util.ArrayList<E> list = new java.util.ArrayList<>();
+        private final ArrayList<E> list = new ArrayList<>();
         private int current = 0;
 
         public PreOrderIterator() {
